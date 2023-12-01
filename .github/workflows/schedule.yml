@@ -1,0 +1,17 @@
+name: On Scheduled
+
+on:
+  schedule:
+    - cron:  '0 15 * * *'
+
+jobs:
+  build:
+    uses: ./.github/workflows/job_build.yml
+    secrets:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  release:
+    uses: ./.github/workflows/job_release.yml
+    needs: build
+    secrets:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

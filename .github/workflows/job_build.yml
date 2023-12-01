@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  workflow_call:
+    secrets:
+      PERSONAL_ACCESS_TOKEN:
+        required: true
+
+jobs:
+  run_snowlhive:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create and set permissions for output directory
+      run: |
+        mkdir -p output
+        chmod 777 output
+
+    - name: Build Docker image
+      run: docker compose build
+
+    - name: Run snowlhive
+      run: |
+        docker compose run --rm rust-lang-book
+        docker compose run --rm rust-lang-api-guidelines
+        docker compose run --rm rust-lang-rfcs
+        docker compose run --rm rust-lang-cargo
+
+    - name: Cleanup
+      run: |
+        find ./output -type d -not -name 'output' -exec sudo rm -rf {} +
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: output
+        path: ./output
+

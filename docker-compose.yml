@@ -1,0 +1,54 @@
+version: "3.9"
+
+x-snowlhive: &snowlhive
+  image: snowlhive:dev
+  build: 
+    context: .
+    dockerfile: ./docker/Dockerfile.development
+  working_dir: /app
+  volumes:
+    - .:/app
+
+services:
+  bash:
+    <<: *snowlhive
+    entrypoint: ["bash"]
+
+  dev:
+    <<: *snowlhive
+
+  app:
+    <<: *snowlhive
+    image: snowlhive:latest
+    build: 
+      context: .
+      dockerfile: ./docker/Dockerfile.production
+
+  rust-lang-book:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_book.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/book.git"
+
+  rust-lang-api-guidelines:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_api-guidelines.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/api-guidelines.git"
+
+  rust-lang-rfcs:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_rfcs.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/rfcs.git"
+
+  rust-lang-cargo:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_cargo.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/cargo.git"
+      INPUT_PATH: "src/doc/src"

@@ -1,0 +1,46 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'snowlhive'",
+      "preLaunchTask": "checkAndClone",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=snowlhive",
+          "--package=snowlhive"
+        ],
+        "filter": {
+          "name": "snowlhive",
+          "kind": "bin"
+        }
+      },
+      "args": ["/tmp/rust-lang_book"],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'snowlhive'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=snowlhive",
+          "--package=snowlhive"
+        ],
+        "filter": {
+          "name": "snowlhive",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

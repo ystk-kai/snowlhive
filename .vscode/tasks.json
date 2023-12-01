@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "checkAndClone",
+      "type": "shell",
+      "command": "if [ ! -d /tmp/rust-lang_book ]; then git clone --depth 1 https://github.com/rust-lang/book /tmp/rust-lang_book; fi",
+      "problemMatcher": []
+    }
+  ]
+}
