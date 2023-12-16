@@ -56,3 +56,11 @@ snowlhive [OPTIONS] INPUT_DIR
 | --remove-url         | URL を削除します。                                                    | false                |
 | --disabled-gitignore | .gitignore ファイルで指定されたファイルを無視する設定を無効化します。 | false                |
 | --max-size           | 出力ファイルの最大サイズをバイト単位で指定します。                    | (なし)               |
+
+## Development
+
+devcontainer を利用して開発を行う場合、以下のコマンドを実行して環境変数を設定してください。
+
+```bash
+echo "PROJECT_DIR=$(pwd)" > .env
+```
