@@ -52,3 +52,17 @@ services:
       OUTPUT_NAME: "rust-lang_cargo.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/cargo.git"
       INPUT_PATH: "src/doc/src"
+
+  rust-lang-reference:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_reference.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/reference.git"
+
+  rust-lang-this-week-in-rust:
+    <<: *snowlhive
+    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    environment:
+      OUTPUT_NAME: "rust-lang_this-week-in-rust.txt"
+      GIT_REPOSITORY_URL: "https://github.com/rust-lang/this-week-in-rust.git"
