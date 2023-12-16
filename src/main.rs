@@ -1,4 +1,5 @@
 mod file_list;
+mod size_utils;
 mod text_cleaner;
 mod text_combiner;
 mod text_output;
@@ -52,6 +53,10 @@ struct Cli {
     /// Disable ignoring files specified in .gitignore
     #[clap(long = "disabled-gitignore")]
     disabled_gitignore: bool,
+
+    /// Sets the maximum file size for output files
+    #[clap(short = 's', long = "max-size", value_parser)]
+    max_size: Option<String>,
 }
 
 fn main() {
@@ -95,37 +100,55 @@ fn main() {
         }
     }
 
-    // ファイルを結合
-    let combined_text = text_combiner::combine_files(&mut files, &cli.input_dir);
-
-    // 結合したテキストをクリーニング
+    // クリーニングオプションの定義
     let cleaning_options = text_cleaner::CleaningOptions {
         remove_codeblock: cli.remove_codeblock,
         remove_url: cli.remove_url,
     };
-    let (cleaned_text, cleaning_details) =
-        text_cleaner::clean_text(&combined_text, &cleaning_options);
 
-    // クリーニングの詳細を表示
+    // ファイルを結合
+    let combined_texts = if let Some(max_size_str) = cli.max_size {
+        let max_size =
+            size_utils::parse_human_readable_size(&max_size_str).expect("Invalid size format");
+        text_combiner::combine_files(&mut files, &cli.input_dir, Some(max_size))
+    } else {
+        text_combiner::combine_files(&mut files, &cli.input_dir, None)
+    };
 
-    if !cleaning_details.is_empty() && cli.verbose {
-        for detail in cleaning_details {
-            debug!("Cleaning detail: {}", detail);
+    // 結合されたテキストの数を取得
+    let num_texts = combined_texts.len();
+
+    // 結合したテキストのベクターに対してクリーニングと出力処理を行う
+    for (index, combined_text) in combined_texts.into_iter().enumerate() {
+        let (cleaned_text, cleaning_details) =
+            text_cleaner::clean_text(&combined_text, &cleaning_options);
+
+        // クリーニングの詳細を表示
+        if !cleaning_details.is_empty() && cli.verbose {
+            for detail in cleaning_details {
+                debug!("Cleaning detail: {}", detail);
+            }
         }
-    }
 
-    // テキストが空でない場合のみ、ファイルに書き出す
-    if !cleaned_text.is_empty() {
-        let output_file_path = format!("{}/{}", cli.output_dir, output_name);
-        let char_count = cleaned_text.len();
-        let line_count = cleaned_text.lines().count();
-        let file_size_bytes = cleaned_text.as_bytes().len();
-        let readable_file_size = format_size(file_size_bytes as u64, DECIMAL);
+        // テキストが空でない場合のみ、ファイルに書き出す
+        if !cleaned_text.is_empty() {
+            let output_file_name = if num_texts > 1 {
+                format!("{}_{}.txt", output_name.trim_end_matches(".txt"), index + 1)
+            } else {
+                output_name.clone()
+            };
+            let output_file_path = format!("{}/{}", cli.output_dir, output_file_name);
 
-        text_output::write_to_file(&cleaned_text, &output_file_path);
-        info!(
-            "Output file: {}, {}, {} characters, {} lines",
-            output_file_path, readable_file_size, char_count, line_count
-        );
+            let char_count = cleaned_text.len();
+            let line_count = cleaned_text.lines().count();
+            let file_size_bytes = cleaned_text.as_bytes().len();
+            let readable_file_size = format_size(file_size_bytes as u64, DECIMAL);
+
+            text_output::write_to_file(&cleaned_text, &output_file_path);
+            info!(
+                "Output file: {}, {}, {} characters, {} lines",
+                output_file_path, readable_file_size, char_count, line_count
+            );
+        }
     }
 }
