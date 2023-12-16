@@ -37,7 +37,7 @@ RUN curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git
     && curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o /usr/share/bash-completion/completions/git-completion \
     && cat /usr/share/zoneinfo/Asia/Tokyo > /etc/localtime
 
-RUN chown -R snowlhive:snowlhive /usr/local/cargo /tmp/target
+RUN chown -R $USERNAME /usr/local/cargo /tmp/target /app
 
 USER snowlhive
 
