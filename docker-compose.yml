@@ -7,7 +7,11 @@ x-snowlhive: &snowlhive
     dockerfile: ./docker/Dockerfile.development
   working_dir: /app
   volumes:
-    - .:/app
+    - ${PROJECT_DIR:-.}:/app
+
+x-run-snowlhive: &run-snowlhive
+  <<: *snowlhive
+  entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
 
 services:
   bash:
@@ -25,44 +29,45 @@ services:
       dockerfile: ./docker/Dockerfile.production
 
   rust-lang-book:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_book.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/book.git"
 
   rust-lang-api-guidelines:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_api-guidelines.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/api-guidelines.git"
 
   rust-lang-rfcs:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_rfcs.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/rfcs.git"
 
   rust-lang-cargo:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_cargo.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/cargo.git"
       INPUT_PATH: "src/doc/src"
 
   rust-lang-reference:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_reference.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/reference.git"
 
   rust-lang-this-week-in-rust:
-    <<: *snowlhive
-    entrypoint: ["bash", "/app/docker/run_snowlhive.sh"]
+    <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "rust-lang_this-week-in-rust.txt"
       GIT_REPOSITORY_URL: "https://github.com/rust-lang/this-week-in-rust.git"
+
+  vercel-nextjs:
+    <<: *run-snowlhive
+    environment:
+      OUTPUT_NAME: "vercel_nextjs.txt"
+      GIT_REPOSITORY_URL: "https://github.com/vercel/next.js"
+      INPUT_PATH: "docs"

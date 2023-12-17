@@ -28,6 +28,9 @@ jobs:
         docker compose run --rm rust-lang-api-guidelines
         docker compose run --rm rust-lang-rfcs
         docker compose run --rm rust-lang-cargo
+        docker compose run --rm rust-lang-reference
+        docker compose run --rm rust-lang-this-week-in-rust
+        docker compose run --rm vercel-nextjs
 
     - name: Cleanup
       run: |
