@@ -7,38 +7,161 @@ on:
         required: true
 
 jobs:
-  run_snowlhive:
+  run_rust-lang-book:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-book
+        run: docker compose run --rm rust-lang-book
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-book
+          path: ./output/rust-lang_book.txt
 
-    - name: Create and set permissions for output directory
-      run: |
-        mkdir -p output
-        chmod 777 output
+  run_rust-lang-api-guidelines:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-api-guidelines
+        run: docker compose run --rm rust-lang-api-guidelines
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-api-guidelines
+          path: ./output/rust-lang_api-guidelines.txt
 
-    - name: Build Docker image
-      run: docker compose build
+  run_rust-lang-rfcs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-rfcs
+        run: docker compose run --rm rust-lang-rfcs
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-rfcs
+          path: ./output/rust-lang_rfcs.txt
 
-    - name: Run snowlhive
-      run: |
-        docker compose run --rm rust-lang-book
-        docker compose run --rm rust-lang-api-guidelines
-        docker compose run --rm rust-lang-rfcs
-        docker compose run --rm rust-lang-cargo
-        docker compose run --rm rust-lang-reference
-        docker compose run --rm rust-lang-this-week-in-rust
-        docker compose run --rm vercel-nextjs
+  run_rust-lang-cargo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-cargo
+        run: docker compose run --rm rust-lang-cargo
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-cargo
+          path: ./output/rust-lang_cargo.txt
 
-    - name: Cleanup
-      run: |
-        find ./output -type d -not -name 'output' -exec sudo rm -rf {} +
+  run_rust-lang-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-reference
+        run: docker compose run --rm rust-lang-reference
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-reference
+          path: ./output/rust-lang_reference.txt
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: output
-        path: ./output
+  run_rust-lang-this-week-in-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run rust-lang-this-week-in-rust
+        run: docker compose run --rm rust-lang-this-week-in-rust
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust-lang-this-week-in-rust
+          path: ./output/rust-lang_this-week-in-rust.txt
 
+  run_vercel-nextjs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run vercel-nextjs
+        run: docker compose run --rm vercel-nextjs
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vercel-nextjs
+          path: ./output/vercel_nextjs.txt
+
+  run_nuxt-nuxt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build dev
+      - name: Create and set permissions for output directory
+        run: mkdir -p output && chmod 777 output
+      - name: Run nuxt-nuxt
+        run: docker compose run --rm nuxt-nuxt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuxt-nuxt
+          path: ./output/nuxt_nuxt.txt
+
+  upload-artifact:
+    needs: 
+      - run_rust-lang-book
+      - run_rust-lang-api-guidelines
+      - run_rust-lang-rfcs
+      - run_rust-lang-cargo
+      - run_rust-lang-reference
+      - run_rust-lang-this-week-in-rust
+      - run_vercel-nextjs
+      - run_nuxt-nuxt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: ./output
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: ./output

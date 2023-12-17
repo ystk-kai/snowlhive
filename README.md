@@ -13,6 +13,25 @@ Open AI の GPTs などで Knowledge として利用するドキュメントテ�
 - 「Snowl」はシロフクロウ（Snowly Owl）の造語で、知恵と美しい見た目を連想するように結合されたドキュメントファイルは綺麗な構造を目指します。
 - 「Hive」は蜂の巣の様にドキュメント毎に区切られた（別ファイル）となるように、ドキュメントを分割して管理します。
 
+<!-- TODO: スケジューラによる成果物の生成（見出しは英語） -->
+
+## Daily Schedule
+
+SnowlHive はデイリーで実行されるワークフローで成果物を生成します。  
+ファイルは [Releases](https://github.com/ystk-kai/snowlhive/releases) からダウンロードできます。
+
+| File Name                       | Description                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| rust-lang_book.txt              | Rust の公式ドキュメント「The Rust Programming Language」のテキストファイル。 |
+| rust-lang_api-guidelines.txt    | Rust の公式ドキュメント「API Guidelines」のテキストファイル。               |
+| rust-lang_rfcs.txt              | Rust の公式ドキュメント「RFCs」のテキストファイル。                         |
+| rust-lang_cargo.txt             | Rust の公式ドキュメント「The Cargo Book」のテキストファイル。               |
+| rust-lang_reference.txt         | Rust の公式ドキュメント「The Rust Reference」のテキストファイル。           |
+| rust-lang_this-week-in-rust.txt | Rust の公式ドキュメント「This Week in Rust」のテキストファイル。            |
+| vercel_nextjs.txt               | Vercel の公式ドキュメント「Next.js」のテキストファイル。                   |
+| nuxt_nuxt.txt                   | Nuxt の公式ドキュメント「Nuxt.js」のテキストファイル。                     |
+
+
 ## How to use SnowlHive?
 
 SnowlHive は Docker イメージとして提供します。

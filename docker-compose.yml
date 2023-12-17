@@ -69,5 +69,12 @@ services:
     <<: *run-snowlhive
     environment:
       OUTPUT_NAME: "vercel_nextjs.txt"
-      GIT_REPOSITORY_URL: "https://github.com/vercel/next.js"
+      GIT_REPOSITORY_URL: "https://github.com/vercel/next.js.git"
+      INPUT_PATH: "docs"
+
+  nuxt-nuxt:
+    <<: *run-snowlhive
+    environment:
+      OUTPUT_NAME: "nuxt_nuxt.txt"
+      GIT_REPOSITORY_URL: "https://github.com/nuxt/nuxt.git"
       INPUT_PATH: "docs"
