@@ -33,7 +33,8 @@
         "eamodio.gitlens",
         "bungcip.better-toml",
         "wmaurer.change-case",
-        "ryu1kn.partial-diff"
+        "ryu1kn.partial-diff",
+        "redhat.vscode-yaml"
       ]
     },
     "settings": {

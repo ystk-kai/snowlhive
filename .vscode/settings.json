@@ -13,6 +13,9 @@
   ],
   "[jsonc]": {
     "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   }
   // "rust-analyzer.inlayHints.chainingHints": false,
   // "rust-analyzer.inlayHints.parameterHints": false,
