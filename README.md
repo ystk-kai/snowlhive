@@ -74,7 +74,7 @@ snowlhive [OPTIONS] INPUT_DIR
 | --remove-codeblock   | Markdown のコードブロックを削除します。                               | false                |
 | --remove-url         | URL を削除します。                                                    | false                |
 | --disabled-gitignore | .gitignore ファイルで指定されたファイルを無視する設定を無効化します。 | false                |
-| --max-size           | 出力ファイルの最大サイズをバイト単位で指定します。                    | (なし)               |
+| --max-size           | 出力ファイルの最大サイズをバイト単位で指定します。<br>KB、MB、GB 単位の指定も可能です。 | (なし)               |
 
 ## Development
 
