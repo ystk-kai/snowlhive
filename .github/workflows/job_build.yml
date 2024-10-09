@@ -19,7 +19,7 @@ jobs:
       - name: Run rust-lang-book
         run: docker compose run --rm rust-lang-book
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-book
           path: ./output/rust-lang_book.txt
@@ -36,7 +36,7 @@ jobs:
       - name: Run rust-lang-api-guidelines
         run: docker compose run --rm rust-lang-api-guidelines
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-api-guidelines
           path: ./output/rust-lang_api-guidelines.txt
@@ -53,7 +53,7 @@ jobs:
       - name: Run rust-lang-rfcs
         run: docker compose run --rm rust-lang-rfcs
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-rfcs
           path: ./output/rust-lang_rfcs.txt
@@ -70,7 +70,7 @@ jobs:
       - name: Run rust-lang-cargo
         run: docker compose run --rm rust-lang-cargo
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-cargo
           path: ./output/rust-lang_cargo.txt
@@ -87,7 +87,7 @@ jobs:
       - name: Run rust-lang-reference
         run: docker compose run --rm rust-lang-reference
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-reference
           path: ./output/rust-lang_reference.txt
@@ -104,7 +104,7 @@ jobs:
       - name: Run rust-lang-this-week-in-rust
         run: docker compose run --rm rust-lang-this-week-in-rust
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rust-lang-this-week-in-rust
           path: ./output/rust-lang_this-week-in-rust.txt
@@ -121,7 +121,7 @@ jobs:
       - name: Run vercel-nextjs
         run: docker compose run --rm vercel-nextjs
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: vercel-nextjs
           path: ./output/vercel_nextjs.txt
@@ -138,7 +138,7 @@ jobs:
       - name: Run nuxt-nuxt
         run: docker compose run --rm nuxt-nuxt
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nuxt-nuxt
           path: ./output/nuxt_nuxt.txt
@@ -156,12 +156,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ./output
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: output
           path: ./output
